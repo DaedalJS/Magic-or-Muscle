@@ -95,8 +95,8 @@ namespace TextBasedGame
                         if (response != "yes" && response != "no" && response != "1" && response != "2") { Console.WriteLine("Please type 'yes', 'no', '1', or '2'. "); }
 
                     } while (response != "yes" && response != "no" && response != "1" && response != "2");
-                    if (response == "yes" || response == "1") { keepGoing = true; } else { keepGoing = false; }
-
+                    if (response == "yes" || response == "1") { keepGoing = true; Console.WriteLine("You decide to continue on.\n"); } else { keepGoing = false; Console.WriteLine("You decide this is a good place to stop."); }
+                    EntCont();
                     travels = Factory.MakeTravels(rnd, player, biomes);
 
 
@@ -109,6 +109,7 @@ namespace TextBasedGame
                 player.DisplayStats();
                 Console.WriteLine($"SCORE: {player.Score}");
                 Console.WriteLine("\nPlay Again?");
+                Console.WriteLine("\n1.Yes\n2.No\n");
                 do
                 {
                     response = Console.ReadLine().ToLower().Trim();
