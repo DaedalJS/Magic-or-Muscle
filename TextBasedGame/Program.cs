@@ -15,13 +15,14 @@ namespace TextBasedGame
 
             #region Title Screen, Play / Quit
             Random rnd = new Random();
-            bool playing = true;
+            bool playing = false;
             
             
 
 
 
-            Console.WriteLine("title here");
+            Console.WriteLine("Magic or Muscle?");
+
             Console.WriteLine("press enter to begin or 'quit' to exit.");
             string response;
             do
@@ -36,7 +37,7 @@ namespace TextBasedGame
 
 
 
-            if (playing)
+            do
             {
 
 
@@ -54,6 +55,8 @@ namespace TextBasedGame
                 Player player = Factory.NewPlayer(rnd, biomes);
                 Travels travels = Factory.MakeTravels(rnd, player, biomes);
                 Area area = Factory.MakeArea(rnd, player, arStyles, weathers);
+                int travelsDist = 0;
+                bool keepGoing = false;
 
 
                 Console.WriteLine($"Okay then {player.Name}, Get Moving.  Daylights Burning.");
@@ -67,15 +70,37 @@ namespace TextBasedGame
 
                 #region GamePlay
                 do
-                {                    
-                    Onward(player, travels, rnd, arStyles, weathers);
-                                       
-                    player.Score = 0+player.Traveled + ((player.KillOr * 500) / player.BeKilled) + (1000 * player.TravelsRun);
-                    if (player.HP <= 0) { break; }
+                {
+                    // put travels flavor text and description here.
 
-                } while (player.Traveled < travels.TownToTownDist);
+                    do
+                    {
+                        Onward(player, travels, rnd, arStyles, weathers);
+
+                        player.Score = 0 + player.Traveled + ((player.KillOr * 500) / player.BeKilled) + (1000 * player.TravelsRun);
+                        if (player.HP <= 0) { break; }
+
+                    } while (player.Traveled < travels.TownToTownDist);
+                    travelsDist += travels.TownToTownDist;
+                    player.Traveled = travelsDist;
+                    Console.WriteLine("you reach the next town and book a room at an inn.\n" +
+                        "after a good nights rest and a hearty meal or two you ponder if you should keep going.\n" +
+                        "Keep Going?\n \n" +
+                        "1. Yes\n2. No");
+                    
+                    do
+                    {
+                        response = Console.ReadLine().ToLower().Trim();
+
+                        if (response != "yes" && response != "no" && response != "1" && response != "2") { Console.WriteLine("Please type 'yes', 'no', '1', or '2'. "); }
+
+                    } while (response != "yes" && response != "no" && response != "1" && response != "2");
+                    if (response == "yes" || response == "1") { keepGoing = true; } else { keepGoing = false; }
+
+                    travels = Factory.MakeTravels(rnd, player, biomes);
 
 
+                } while (keepGoing);
 
                 #endregion
 
@@ -83,13 +108,23 @@ namespace TextBasedGame
                 Console.Clear();
                 player.DisplayStats();
                 Console.WriteLine($"SCORE: {player.Score}");
-                Console.WriteLine("\nPress enter to end game.");
-                Console.ReadLine();
-                
+                Console.WriteLine("\nPlay Again?");
+                do
+                {
+                    response = Console.ReadLine().ToLower().Trim();
 
+                    if (response != "yes" && response != "no" && response != "1" && response != "2") { Console.WriteLine("Please type 'yes', 'no', '1', or '2'. "); }
+
+                } while (response != "yes" && response != "no" && response != "1" && response != "2");
+                if (response == "yes" || response == "1") { playing = true; } else { playing = false; }
 
                 #endregion
-            }
+
+            } while (playing) ;
+
+                Console.WriteLine("\nPress enter to end game.");
+                Console.ReadLine();
+
         }
 
         #region Common Methods;
@@ -144,6 +179,12 @@ namespace TextBasedGame
                { 
                     if (TakeEmOut.DukeItOut(rnd)) { player.KillOr += 1; whereImAt.EnemyCount -= 1; }
 
+                    if (whereImAt.EnemyCount == 0) 
+                    {
+                        player.BattleChance -= 20; 
+                        if (player.BattleChance < 10) { player.BattleChance = 10; } 
+                    }
+
                } while ( whereImAt.EnemyCount > 0 );
             }
 
@@ -153,8 +194,17 @@ namespace TextBasedGame
                 Console.Clear();
                 player.DisplayStats();
                 Console.WriteLine($"you travel onward.\n");
-                if (player.HP < player.MaxHP && player.MP > 30) { player.HP += 50; Console.WriteLine("You channel your mana towards your wounds as you travel.\n Your wounds are looking better as a result.\n"); }
-                if (player.HP > player.MaxHP) { player.HP = player.MaxHP; }
+
+                if (player.MP > 30)
+                {
+                    if (player.HP < player.MaxHP) { Console.WriteLine("You channel your mana towards your wounds as you travel.\n Your wounds are looking better as a result.\n"); }
+                    if (player.HP < (player.MaxHP - 40)) { player.HP += 40; player.MP -= 30; } else { player.HP += 40; player.MP -= 20; }
+                    if (player.HP > player.MaxHP) { player.HP = player.MaxHP; }
+                }
+                player.Stamina += 30; player.MP += 30;
+                if (player.MP > player.MaxMP) { player.MP = player.MaxMP; }
+                if (player.Stamina > player.MaxStamina) { player.Stamina = player.MaxStamina; }
+                
                 EntCont();
             }
             Console.Clear();
@@ -174,7 +224,7 @@ namespace TextBasedGame
             {
                 player.Fight = false;
                 if (player.BattleChance >= 70) { Console.WriteLine("You're sick and tired of not attracting attention and are now noisily moving on.\n"); }
-                else { Console.WriteLine("your fatigue has increased, you become slightly less observant of your surroundings.\n"); player.BattleChance += 10; }
+                else { Console.WriteLine("as your travels continue you worry less about potential dangers. \n"); player.BattleChance += 10; }
             }
 
         }

@@ -80,12 +80,7 @@ namespace TextBasedGame
             int enemyCount;
             if (battle)
             {
-                /* commenting out 'cause battles are rough.
-                 * 
-                    rndnum = rnd.Next(1, 5);
-                    enemyCount = rndnum;
-                */
-                enemyCount = 1;
+                if (player.TravelsRun > 1) { enemyCount = rnd.Next(1, 1 + player.TravelsRun); } else { enemyCount = 1; }
             } else { enemyCount = 0; }
 
             int floraMaxLim = 0;
@@ -238,10 +233,6 @@ namespace TextBasedGame
         }
         #endregion
 
-        // FINISH BATTLE CREATOR
-        #region Battle Creator
-
-        #endregion
-
+      
     }
 }
