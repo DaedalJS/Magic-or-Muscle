@@ -11,12 +11,12 @@ namespace TextBasedGame
 
             Name = name;
             MyBiome = biome;
-            MaxHP = 100 + (TravelsRun*10)+(KillOr/10);
+            MaxHP = 100;
             HP = 100;
-            MaxMP = 100 + (MagUses/10);
+            MaxMP = 100; 
             MP = 100;
             Stamina = 100;
-            MaxStamina = 100 + (AtkUses/10);
+            MaxStamina = 100;
             Dodge = 40;
             Stance = 0;
             MagUses = 0;
@@ -27,7 +27,7 @@ namespace TextBasedGame
             KillOr = 0;
             BeKilled = 1;
             TravelsRun = 0;
-            Score = 0 +Traveled + ((KillOr * 500) / BeKilled) + (1000 * TravelsRun);
+            Score = 0;
             Fight = false;
 
         }
@@ -59,85 +59,117 @@ namespace TextBasedGame
         public void BattleOpt()
         {
             Stance = 0;
-            Console.WriteLine("Choose an action.");
-            Console.WriteLine("1. Dodge \n2. Attack \n3. Defend \n4. Counter");
                 string response;
             do
             {
-                response = Console.ReadLine();
-                response = response.ToLower().Trim();
-                if (response != "1" && response != "2" && response != "3" && response != "4" && response != "dodge" && response != "attack" && response != "defend" && response != "counter")
-                {
-                    Console.WriteLine("Please pick a listed response by number or word.");
-                }
-
-
-            } while (response != "1" && response != "2" && response != "3" && response != "4" && response != "dodge" && response != "attack" && response != "defend" && response != "counter");
-            
-            switch (response) 
-            {
-                case "1":
-                case "dodge":
-                    Stance = 0;
-                    break;
-                case "2":
-                case "attack":
-                    Stance = 1;
-                    break;
-                case "3":
-                case "defend":
-                    Stance = 2;
-                    break;
-                case "4":
-                case "counter":
-                    Stance = 3;
-                    break;
-                default:
-                    Stance = 1;
-                    break;
-            }
-
-            if (Stance != 0) 
-            {
-                Console.WriteLine("Pick a Method.");
-                Console.WriteLine("1. Magic \n2. Muscle");
+                Console.WriteLine("Choose an action.");
+                Console.WriteLine("1. Dodge \n2. Magic \n3. Muscle\n");
                 do
                 {
                     response = Console.ReadLine();
                     response = response.ToLower().Trim();
-                    if (response != "1" && response != "2" && response != "Muscle" && response != "Magic")
+                    if (response != "1" && response != "2" && response != "3" && response != "dodge" && response != "magic" && response != "muscle")
                     {
-                        Console.WriteLine("Please pick a listed response by number or word.");
+                        Console.WriteLine("Please pick a listed response by number or word.\n");
                     }
 
 
-                } while (response != "1" && response != "2" && response != "muscle" && response != "magic");
+                } while (response != "1" && response != "2" && response != "3" && response != "dodge" && response != "magic" && response != "muscle");
+
 
                 switch (response)
                 {
                     case "1":
-                    case "magic":
-                        Stance = Stance + 3;
+                    case "dodge":
+                        Stance = 0;
                         break;
                     case "2":
-                    case "muscle":
-                        
+                    case "magic":
+                        if (MP > 39)
+                        {
+                            Stance = 4;
+                            MagUses += 1;
+                        }
+                        else { response = "7"; Console.WriteLine("Not enough MP!\n"); }
                         break;
+                    case "3":
+                    case "muscle":
+                        if (Stamina > 39)
+                        {
+                            Stance = 1;
+                            AtkUses += 1;
+                        }
+                        else { response = "7"; Console.WriteLine("Not enough Stamina!\n"); }
+                        break;
+                    default:
+                        Stance = 1;
+                        break;
+                }
+
+
+            }
+            while (response == "7");
+            if (Stance != 0)
+            {
+                Console.WriteLine("\nPick an action!");
+
+                                
+                    Console.WriteLine("\n1. Attack \n2. Defend \n3. Counter\n");
+                    do
+                    {
+                        response = Console.ReadLine();
+                        response = response.ToLower().Trim();
+                        if (response != "1" && response != "2" && response != "3" && response != "attack" && response != "defend" && response != "counter")
+                        {
+                            Console.WriteLine("Please pick a listed response by number or word.");
+                        }
+
+
+                    } while (response != "1" && response != "2" && response != "3" && response != "attack" && response != "defend" && response != "counter");
+                
+                 
+            }
+                switch (response)
+                {
+                    case "1":
+                    case "attack":
+                        
+                        Stance += 0;
+                        
+
+                        break;
+                    case "2":
+                    case "defend":
+                    Stance += 1;
+                    
+
+                        break;
+                    case "3":
+                    case "counter":
+                    Stance += 2;
+                    
+                    break;
                     default:
                         break;
                 }
-            }
-
+            
         }
 
         public void DisplayStats()
         {
             Console.WriteLine($"{Name} HEALTH:{HP} / {MaxHP} | MANA: {MP} / {MaxMP} | STAMINA: {Stamina} / {MaxStamina}");
-            Console.WriteLine($"Score: {Score} | Traveled:{Traveled} malms | Batttle Wins: {KillOr}");
-            Console.WriteLine("\n");
-
+            Console.WriteLine($"Score: {Score} | Traveled:{Traveled} malms | Batttle Wins: {KillOr}\n");
+            
         }
-
-
+        public void UpdateStats()
+        {
+            
+            MaxHP = 100 + (AtkUses / 10) + (KillOr / 3) + (TravelsRun * 10);
+            if (MaxHP > 500) { MaxHP = 500; }
+            MaxMP = 100 + (MagUses / 10);
+            if (MaxMP > 150) { MaxMP = 150; }
+            MaxStamina = 100 + (AtkUses / 10);
+            if (MaxStamina > 150) { MaxStamina = 150; }
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace TextBasedGame
 
         public void AreaDesc()
         {
-            Console.WriteLine($"THIS IS WHAT THE AREA LOOKS LIKE!  {EnemyCount}");
+            Console.WriteLine($" a description of the area goes here!  Enemies: {EnemyCount}\n");
             
         }
 

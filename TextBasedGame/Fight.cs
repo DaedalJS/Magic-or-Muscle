@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace TextBasedGame
 {
@@ -22,7 +23,9 @@ namespace TextBasedGame
         public bool Lost { get; set; }
 
         public bool DukeItOut(Random rnd)
-        {
+        { 
+            var spells = new List<string>() { "fireball", "windblade", "arcane bolt", "lightning", "ice spike", "expecto patronum", "magic missile", "rasengan", "summoned fist"};
+
             string color = "blue";
             string color2 = "green";
             string descriptive1 = "mean";
@@ -31,14 +34,17 @@ namespace TextBasedGame
             string descriptive2 = "merrily";
             string weapon = "club";
 
+            Console.Clear();
+            Protag.DisplayStats();
             Console.WriteLine($"Before you stands a {Antag.Name} with {color} eyes, {color2} hair, and a {descriptive1} {expression}.\n " +
-                $"it {mocks} you {descriptive2} before it draws it's {weapon} in preparation for the fight.");
-            var spells = new List<string>() { "fireball", "windblade", "arcane bolt", "lightning", "ice spike", "expecto patronum", "magic missile", "rasengan", "summoned fist"};
+                $"it {mocks} you {descriptive2} before it draws it's {weapon} in preparation for the fight.\n");
+
+            Program.EntCont();
             do
             {
+                if (Protag.HP < 1) { break; }
                 Console.Clear();
                 Protag.DisplayStats();
-                Console.WriteLine("\n");
                 Antag.DisplayStats();
 
                 Protag.BattleOpt();
@@ -54,30 +60,30 @@ namespace TextBasedGame
                         break;
                     case 1:
                         Console.WriteLine($"\nYou swiftly pull your dagger and lunge towards the {Antag.Name}\n");
-                        Protag.Stamina -= 10; Protag.MP += 15; if (Protag.MP > Protag.MaxMP) { Protag.MP = Protag.MaxMP; }
+                        Protag.Stamina -= 40; Protag.MP += 15; if (Protag.MP > Protag.MaxMP) { Protag.MP = Protag.MaxMP; }
                         break;
                     case 2:
                         Console.WriteLine("\nIn anticipation of an attack you throw your guard up.\n");
-                        Protag.Stamina -= 10; Protag.MP += 15; if (Protag.MP > Protag.MaxMP) { Protag.MP = Protag.MaxMP; }
+                        Protag.Stamina -= 40; Protag.MP += 15; if (Protag.MP > Protag.MaxMP) { Protag.MP = Protag.MaxMP; }
 
                         break;
                     case 3:
                         Console.WriteLine($"\nYou wait patiently yet prepared for the {Antag.Name} to strike.\n");
-                        Protag.Stamina -= 10; Protag.MP += 15; if (Protag.MP > Protag.MaxMP) { Protag.MP = Protag.MaxMP; }
+                        Protag.Stamina -= 40; Protag.MP += 15; if (Protag.MP > Protag.MaxMP) { Protag.MP = Protag.MaxMP; }
 
                         break;
                     case 4:                        
                         Console.WriteLine($"you quickly spell cast {spell} at the {Antag.Name}.\n");
-                        Protag.MP -= 10; Protag.Stamina += 15; if (Protag.Stamina > Protag.MaxStamina) { Protag.Stamina = Protag.MaxStamina; }
+                        Protag.MP -= 40; Protag.Stamina += 15; if (Protag.Stamina > Protag.MaxStamina) { Protag.Stamina = Protag.MaxStamina; }
 
                         break;
                     case 5:
                         Console.WriteLine($"You cast a magic shield to dissipate the force of magic attacks.\n");
-                        Protag.MP -= 10; Protag.Stamina += 15; if (Protag.Stamina > Protag.MaxStamina) { Protag.Stamina = Protag.MaxStamina; }
+                        Protag.MP -= 40; Protag.Stamina += 15; if (Protag.Stamina > Protag.MaxStamina) { Protag.Stamina = Protag.MaxStamina; }
                         break;
                     case 6:
                         Console.WriteLine("expecting a magic attack, you prepare a reflect spell.\n");
-                        Protag.MP -= 10; Protag.Stamina += 15; if (Protag.Stamina > Protag.MaxStamina) { Protag.Stamina = Protag.MaxStamina; }
+                        Protag.MP -= 40; Protag.Stamina += 15; if (Protag.Stamina > Protag.MaxStamina) { Protag.Stamina = Protag.MaxStamina; }
                         break;
                     default:
                         Console.WriteLine($"\nYou and the {Antag.Name} are not sure what you're looking at but it doesn't seem right.\n");
@@ -85,6 +91,7 @@ namespace TextBasedGame
                         break;
                 }
 
+                Thread.Sleep(500);
                 int rolls;                
                 // user tries to dodge
                 if (Protag.Stance == 0) 
@@ -93,8 +100,8 @@ namespace TextBasedGame
                     if (Protag.Dodge <= rolls) 
                     {
                         Console.WriteLine("You dodge the attack"); 
-                        Protag.MP += 15; 
-                        Protag.Stamina += 15; 
+                        Protag.MP += 50; 
+                        Protag.Stamina += 50; 
                         if (Protag.MaxMP < Protag.MP) { Protag.MP = Protag.MaxMP; }
                         if (Protag.MaxStamina < Protag.Stamina) { Protag.Stamina = Protag.MaxStamina; }
 
@@ -103,8 +110,8 @@ namespace TextBasedGame
                     {
                         Console.WriteLine("Your moves were predicted and you took a hit.");
                         Protag.HP -= 20;
-                        Protag.MP += 7;
-                        Protag.Stamina += 7;
+                        Protag.MP += 25;
+                        Protag.Stamina += 25;
                         if (Protag.MaxMP < Protag.MP) { Protag.MP = Protag.MaxMP; }
                         if (Protag.MaxStamina < Protag.Stamina) { Protag.Stamina = Protag.MaxStamina; }
                     }
@@ -454,11 +461,20 @@ namespace TextBasedGame
                             
                 }
 
-            } while (Antag.HP >0 && Protag.HP > 0);
+                
+            } while (Antag.HP > 0 && Protag.HP > 0);
 
+
+
+            Protag.UpdateStats();
+            Protag.BattleChance -= 5;
+            if (Protag.BattleChance < 20) { Protag.BattleChance = 20; }
             Protag.Fight = false;
-            if (Antag.HP <= 0) { return false; }
-            if (Protag.HP <= 0) { Protag.KillOr += 1; return true; }
+            if (Antag.HP <= 0) { return true; }
+            if (Protag.HP <= 0) { return false; }
+
+
+
             return true;
         }
 

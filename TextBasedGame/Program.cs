@@ -67,10 +67,10 @@ namespace TextBasedGame
 
                 #region GamePlay
                 do
-                {
-
+                {                    
                     Onward(player, travels, rnd, arStyles, weathers);
                                        
+                    player.Score = 0+player.Traveled + ((player.KillOr * 500) / player.BeKilled) + (1000 * player.TravelsRun);
                     if (player.HP <= 0) { break; }
 
                 } while (player.Traveled < travels.TownToTownDist);
@@ -140,7 +140,11 @@ namespace TextBasedGame
 
             if (whereImAt.EnemyCount > 0)
             {
-                TakeEmOut.DukeItOut(rnd);
+               do 
+               { 
+                    if (TakeEmOut.DukeItOut(rnd)) { player.KillOr += 1; whereImAt.EnemyCount -= 1; }
+
+               } while ( whereImAt.EnemyCount > 0 );
             }
 
             if (player.HP > 0)
@@ -148,7 +152,7 @@ namespace TextBasedGame
 
                 Console.Clear();
                 player.DisplayStats();
-                Console.WriteLine($"you travel onward.");
+                Console.WriteLine($"you travel onward.\n");
                 if (player.HP < player.MaxHP && player.MP > 30) { player.HP += 50; Console.WriteLine("You channel your mana towards your wounds as you travel.\n Your wounds are looking better as a result.\n"); }
                 if (player.HP > player.MaxHP) { player.HP = player.MaxHP; }
                 EntCont();
@@ -169,8 +173,8 @@ namespace TextBasedGame
             else
             {
                 player.Fight = false;
-                if (player.BattleChance >= 70) { Console.WriteLine("You're sick and tired of not attracting attention and are now noisily moving on."); }
-                else { Console.WriteLine("your fatigue has increased, you become slightly less observant of your surroundings."); player.BattleChance += 10; }
+                if (player.BattleChance >= 70) { Console.WriteLine("You're sick and tired of not attracting attention and are now noisily moving on.\n"); }
+                else { Console.WriteLine("your fatigue has increased, you become slightly less observant of your surroundings.\n"); player.BattleChance += 10; }
             }
 
         }
