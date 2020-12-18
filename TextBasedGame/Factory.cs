@@ -51,7 +51,8 @@ namespace TextBasedGame
         public static Travels MakeTravels(Random rng, Player player, List<string> biomes)
         {
             int tttd = rng.Next(400, 1200);
-           
+
+           // most of this is there for future expansion idea.
             int segs = (tttd / 400) * 2;
             int sl = tttd / rng.Next(7, 13);
             string b1 = player.MyBiome;

@@ -203,7 +203,7 @@ namespace TextBasedGame
                 if (player.MP > 30)
                 {
                     if (player.HP < player.MaxHP) { Console.WriteLine("You channel your mana towards your wounds as you travel.\n Your wounds are looking better as a result.\n"); }
-                    if (player.HP < (player.MaxHP - 40)) { player.HP += 40; player.MP -= 30; } else { player.HP += 40; player.MP -= 20; }
+                    if (player.HP < (player.MaxHP - 30)) { player.HP += 30; player.MP -= 30; } else { player.HP += 30; player.MP -= 20; }
                     if (player.HP > player.MaxHP) { player.HP = player.MaxHP; }
                 }
                 player.Stamina += 30; player.MP += 30;

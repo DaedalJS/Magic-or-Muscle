@@ -25,19 +25,25 @@ namespace TextBasedGame
         public bool DukeItOut(Random rnd)
         { 
             var spells = new List<string>() { "fireball", "windblade", "arcane bolt", "lightning", "ice spike", "expecto patronum", "magic missile", "rasengan", "summoned fist"};
+            var colors = new List<string>() { "blue", "green", "red", "yellow", "violet", "brown", "orange", "black", "white" };
+            var descriptors1 = new List<string>() { "mean", "angry", "dour", "awkward", "merry", "frightening", "upsetting" };
+            var descriptors2 = new List<string>() {"angrily","snidely","merrily","rudely","vulgarly","awkwardly","poorly","oddly" };
+            var expressions = new List<string>() {"sneer","glower","stare","grin","smirk","frown","laugh" };
+            var jeers = new List<string>() { "taunts", "mocks", "spits", "shouts", "grunts", "farts","mumbles" };
+            var weapons = new List<string>() { "club", "dirk", "sword", "axe", "staff", "knife", "mace", "halberd", "spear", "fists" };
 
-            string color = "blue";
-            string color2 = "green";
-            string descriptive1 = "mean";
-            string expression = "sneer";
-            string mocks = "taunts";
-            string descriptive2 = "merrily";
-            string weapon = "club";
+            string color = colors[rnd.Next(0,8)];   
+            string color2 = colors[rnd.Next(0, 8)];
+            string descriptive1 = descriptors1[rnd.Next(0, 6)];
+            string expression = expressions[rnd.Next(0,6)];
+            string mocks = jeers[rnd.Next(0, 6)];
+            string descriptive2 = descriptors2[rnd.Next(0, 7)];
+            string weapon = weapons[rnd.Next(0, 9)];
 
             Console.Clear();
             Protag.DisplayStats();
             Console.WriteLine($"Before you stands a {Antag.Name} with {color} eyes, {color2} hair, and a {descriptive1} {expression}.\n " +
-                $"it {mocks} you {descriptive2} before it draws it's {weapon} in preparation for the fight.\n");
+                $"it {mocks} you {descriptive2} before it raises it's {weapon} in preparation for the fight.\n");
 
             Program.EntCont();
             do
