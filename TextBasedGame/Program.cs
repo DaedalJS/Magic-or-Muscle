@@ -47,7 +47,7 @@ namespace TextBasedGame
                 // these contian options for possible future expansion
                 #region partially implemented but does nothing
                 List<string> arStyles = new List<string>() { "normal", "river", "canyon" };
-                List<string> weathers = new List<string>() { "pleasant", "rain", "electrical storm", "thunder storm", "heat wave", "cold snap", "snow", "hail" };
+                List<string> weathers = new List<string>() { "pleasant", "rainy", "heavy with lightning", "thunderous and stormy", "into swealtering heat", "fridgid", "snowy", "a hailstorm", "windy"};
                 #endregion
                 #endregion
 
@@ -81,25 +81,29 @@ namespace TextBasedGame
                         if (player.HP <= 0) { break; }
 
                     } while (player.Traveled < travels.TownToTownDist);
-                    travelsDist += travels.TownToTownDist;
-                    player.Traveled = travelsDist;
-                    Console.WriteLine("you reach the next town and book a room at an inn.\n" +
-                        "after a good nights rest and a hearty meal or two you ponder if you should keep going.\n" +
-                        "Keep Going?\n \n" +
-                        "1. Yes\n2. No");
-                    
-                    do
+
+                    if (player.HP > 0)
                     {
-                        response = Console.ReadLine().ToLower().Trim();
-
-                        if (response != "yes" && response != "no" && response != "1" && response != "2") { Console.WriteLine("Please type 'yes', 'no', '1', or '2'. "); }
-
-                    } while (response != "yes" && response != "no" && response != "1" && response != "2");
-                    if (response == "yes" || response == "1") { keepGoing = true; Console.WriteLine("You decide to continue on.\n"); } else { keepGoing = false; Console.WriteLine("You decide this is a good place to stop."); }
-                    EntCont();
-                    travels = Factory.MakeTravels(rnd, player, biomes);
+                        travelsDist += travels.TownToTownDist;
+                        player.Traveled = travelsDist;
+                        Console.WriteLine("you reach the next town and book a room at an inn.\n" +
+                            "after a good nights rest and a hearty meal or two you ponder if you should keep going.\n" +
+                            "Keep Going?\n \n" +
+                            "1. Yes\n2. No");
 
 
+                        do
+                        {
+                            response = Console.ReadLine().ToLower().Trim();
+
+                            if (response != "yes" && response != "no" && response != "1" && response != "2") { Console.WriteLine("Please type 'yes', 'no', '1', or '2'. "); }
+
+                        } while (response != "yes" && response != "no" && response != "1" && response != "2");
+                        if (response == "yes" || response == "1") { keepGoing = true; Console.WriteLine("You decide to continue on.\n"); } else { keepGoing = false; Console.WriteLine("You decide this is a good place to stop."); }
+                        EntCont();
+                        travels = Factory.MakeTravels(rnd, player, biomes);
+
+                    }
                 } while (keepGoing);
 
                 #endregion
@@ -171,7 +175,7 @@ namespace TextBasedGame
             Enemy whoIFite = Factory.MakeEnemy(rnd, whereImAt);
             Fight TakeEmOut = new Fight(player, whoIFite);
 
-            whereImAt.AreaDesc();
+            whereImAt.AreaDesc(player);
             EntCont();
 
             if (whereImAt.EnemyCount > 0)
@@ -185,7 +189,7 @@ namespace TextBasedGame
                         player.BattleChance -= 20; 
                         if (player.BattleChance < 10) { player.BattleChance = 10; } 
                     }
-
+                    if (player.HP <1) { break; }
                } while ( whereImAt.EnemyCount > 0 );
             }
 

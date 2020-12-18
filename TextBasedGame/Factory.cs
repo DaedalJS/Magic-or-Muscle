@@ -74,7 +74,7 @@ namespace TextBasedGame
             string biome = player.MyBiome;
             int rndnum = rnd.Next(0, 2);
             string arStyle = arStyles[rndnum];
-            rndnum = rnd.Next(0, 7);
+            rndnum = rnd.Next(0, 8);
             string weather = weathers[rndnum];
             bool battle = player.Fight;
             int enemyCount;
