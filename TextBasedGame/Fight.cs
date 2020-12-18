@@ -29,7 +29,7 @@ namespace TextBasedGame
             var descriptors1 = new List<string>() { "mean", "angry", "dour", "awkward", "merry", "frightening", "upsetting" };
             var descriptors2 = new List<string>() {"angrily","snidely","merrily","rudely","vulgarly","awkwardly","poorly","oddly" };
             var expressions = new List<string>() {"sneer","glower","stare","grin","smirk","frown","laugh" };
-            var jeers = new List<string>() { "taunts", "mocks", "spits", "shouts", "grunts", "farts","mumbles" };
+            var jeers = new List<string>() { "taunts", "mocks", "spits at", "shouts at", "grunts at", "farts towards","mumbles towards" };
             var weapons = new List<string>() { "club", "dirk", "sword", "axe", "staff", "knife", "mace", "halberd", "spear", "fists" };
 
             string color = colors[rnd.Next(0,8)];   

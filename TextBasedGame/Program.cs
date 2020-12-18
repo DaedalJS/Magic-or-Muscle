@@ -77,15 +77,15 @@ namespace TextBasedGame
                     {
                         Onward(player, travels, rnd, arStyles, weathers);
 
-                        player.Score = 0 + player.Traveled + ((player.KillOr * 500) / player.BeKilled) + (1000 * player.TravelsRun);
+                        player.Score = 0 + player.Traveled + player.PreviousTravels + ((player.KillOr * 500) / player.BeKilled) + (1000 * player.TravelsRun);
                         if (player.HP <= 0) { break; }
 
-                    } while (player.Traveled < travels.TownToTownDist);
+                    } while (player.Traveled < travels.TownToTownDist && player.HP > 0);
 
                     if (player.HP > 0)
                     {
-                        travelsDist += travels.TownToTownDist;
-                        player.Traveled = travelsDist;
+                        player.PreviousTravels += travels.TownToTownDist;
+
                         Console.WriteLine("you reach the next town and book a room at an inn.\n" +
                             "after a good nights rest and a hearty meal or two you ponder if you should keep going.\n" +
                             "Keep Going?\n \n" +
@@ -99,12 +99,13 @@ namespace TextBasedGame
                             if (response != "yes" && response != "no" && response != "1" && response != "2") { Console.WriteLine("Please type 'yes', 'no', '1', or '2'. "); }
 
                         } while (response != "yes" && response != "no" && response != "1" && response != "2");
-                        if (response == "yes" || response == "1") { keepGoing = true; Console.WriteLine("You decide to continue on.\n"); } else { keepGoing = false; Console.WriteLine("You decide this is a good place to stop."); }
+                        if (response == "yes" || response == "1") { keepGoing = true; Console.WriteLine("You decide to continue on.\n"); player.Traveled = 0; } else { keepGoing = false; Console.WriteLine("You decide this is a good place to stop."); }
+                        
                         EntCont();
                         travels = Factory.MakeTravels(rnd, player, biomes);
 
                     }
-                } while (keepGoing);
+                } while (keepGoing && player.HP > 0);
 
                 #endregion
 
@@ -178,7 +179,7 @@ namespace TextBasedGame
             whereImAt.AreaDesc(player);
             EntCont();
 
-            if (whereImAt.EnemyCount > 0)
+            if (whereImAt.EnemyCount > 0 && player.HP > 0)
             {
                do 
                { 
@@ -190,7 +191,7 @@ namespace TextBasedGame
                         if (player.BattleChance < 10) { player.BattleChance = 10; } 
                     }
                     if (player.HP <1) { break; }
-               } while ( whereImAt.EnemyCount > 0 );
+               } while ( whereImAt.EnemyCount > 0 && player.HP > 0);
             }
 
             if (player.HP > 0)
@@ -218,20 +219,24 @@ namespace TextBasedGame
         // Random Battle Roll
         public static void BattleRoll(Random rnd, Player player)
         {
-            int battleRoll = rnd.Next(1, 100);
-            if (battleRoll < player.BattleChance)
+            if (player.HP > 0)
             {
-                if (player.BattleChance < 100) { player.BattleChance += 10; }
-                player.Fight = true;
+
+                int battleRoll = rnd.Next(1, 100);
+                if (battleRoll < player.BattleChance)
+                {
+                    if (player.BattleChance < 100) { player.BattleChance += 10; }
+                    player.Fight = true;
+
+                }
+                else
+                {
+                    player.Fight = false;
+                    if (player.BattleChance >= 70) { Console.WriteLine("You're sick and tired of not attracting attention and are now noisily moving on.\n"); }
+                    else { Console.WriteLine("as your travels continue you worry less about potential dangers. \n"); player.BattleChance += 10; }
+                }
 
             }
-            else
-            {
-                player.Fight = false;
-                if (player.BattleChance >= 70) { Console.WriteLine("You're sick and tired of not attracting attention and are now noisily moving on.\n"); }
-                else { Console.WriteLine("as your travels continue you worry less about potential dangers. \n"); player.BattleChance += 10; }
-            }
-
         }
 
 

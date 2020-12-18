@@ -21,8 +21,9 @@ namespace TextBasedGame
             Stance = 0;
             MagUses = 0;
             AtkUses = 0;
-            BattleChance = 10;
+            BattleChance = 20;
             Traveled = 0;
+            PreviousTravels = 0;
             Reviving = false;
             KillOr = 0;
             BeKilled = 1;
@@ -44,6 +45,7 @@ namespace TextBasedGame
         public int AtkUses { get; set; }
         public int BattleChance { get; set; }
         public int Traveled { get; set; }
+        public int PreviousTravels { get; set; }
         public bool Reviving { get; set; }
         public int KillOr { get; set; }
         public int BeKilled { get; set; }
@@ -159,7 +161,7 @@ namespace TextBasedGame
         public void DisplayStats()
         {
             Console.WriteLine($"{Name} HEALTH:{HP} / {MaxHP} | MANA: {MP} / {MaxMP} | STAMINA: {Stamina} / {MaxStamina}");
-            Console.WriteLine($"Score: {Score} | Traveled:{Traveled} malms | Batttle Wins: {KillOr}\n");
+            Console.WriteLine($"Score: {Score} | Traveled:{Traveled + PreviousTravels} malms | Batttle Wins: {KillOr}\n");
             
         }
         public void UpdateStats()
