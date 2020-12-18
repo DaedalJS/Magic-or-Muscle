@@ -63,7 +63,7 @@ namespace TextBasedGame
             do
             {
                 Console.WriteLine("Choose an action.");
-                Console.WriteLine("1. Dodge \n2. Magic \n3. Muscle\n");
+                Console.WriteLine("1. Magic \n2. Muscle \n3. Dodge\n");
                 do
                 {
                     response = Console.ReadLine();
@@ -80,10 +80,6 @@ namespace TextBasedGame
                 switch (response)
                 {
                     case "1":
-                    case "dodge":
-                        Stance = 0;
-                        break;
-                    case "2":
                     case "magic":
                         if (MP > 39)
                         {
@@ -92,7 +88,7 @@ namespace TextBasedGame
                         }
                         else { response = "7"; Console.WriteLine("Not enough MP!\n"); }
                         break;
-                    case "3":
+                    case "2":
                     case "muscle":
                         if (Stamina > 39)
                         {
@@ -101,14 +97,19 @@ namespace TextBasedGame
                         }
                         else { response = "7"; Console.WriteLine("Not enough Stamina!\n"); }
                         break;
+                    case "3":
+                    case "dodge":
+                        Stance = 0;
+                        break;
                     default:
-                        Stance = 1;
+                        Stance = 0;
                         break;
                 }
 
 
             }
             while (response == "7");
+
             if (Stance != 0)
             {
                 Console.WriteLine("\nPick an action!");
@@ -128,7 +129,6 @@ namespace TextBasedGame
                     } while (response != "1" && response != "2" && response != "3" && response != "attack" && response != "defend" && response != "counter");
                 
                  
-            }
                 switch (response)
                 {
                     case "1":
@@ -153,6 +153,7 @@ namespace TextBasedGame
                         break;
                 }
             
+            }
         }
 
         public void DisplayStats()
