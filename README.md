@@ -4,10 +4,15 @@ this was started as my final project for the TrueCoder's coding bootcamp that ta
 battle chance is 20% at lowest and raises 10% for each area without a battle.  it lowers at most 20% after a battle.
 
 magic attacks beat muscle defense/counters, 
+
 muscle attacks beat magic defense/counters,
+
 defense beats the attacks of their own kind.
+
 counters and defenses are draws.
+
 draws are sometimes bad for both sometimes bad for one (50/50 chance) and sometimes just cancel each other out.
+
 dodge chance varies from 40% to 60%
 
 mana gets used while you travel to heal you.
