@@ -103,7 +103,7 @@ namespace TextBasedGame
                         
                         EntCont();
                         travels = Factory.MakeTravels(rnd, player, biomes);
-
+                        Console.Clear();
                     }
                 } while (keepGoing && player.HP > 0);
 
