@@ -4,6 +4,7 @@ using System.Threading;
 using System.Linq;
 
 
+
 namespace TextBasedGame
 {
     class Program
@@ -85,7 +86,7 @@ namespace TextBasedGame
                     if (player.HP > 0)
                     {
                         player.PreviousTravels += travels.TownToTownDist;
-
+                        player.HP = player.MaxHP; player.MP = player.MaxMP; player.Stamina = player.MaxStamina;
                         Console.WriteLine("you reach the next town and book a room at an inn.\n" +
                             "after a good nights rest and a hearty meal or two you ponder if you should keep going.\n" +
                             "Keep Going?\n \n" +

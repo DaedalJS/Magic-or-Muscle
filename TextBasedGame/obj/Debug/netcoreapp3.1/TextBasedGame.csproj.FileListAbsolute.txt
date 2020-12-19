@@ -1,6 +1,5 @@
 C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\obj\Debug\netcoreapp3.1\TextBasedGame.AssemblyInfoInputs.cache
 C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\obj\Debug\netcoreapp3.1\TextBasedGame.AssemblyInfo.cs
-C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\obj\Debug\netcoreapp3.1\TextBasedGame.csproj.CoreCompileInputs.cache
 C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\obj\Debug\netcoreapp3.1\TextBasedGame.genruntimeconfig.cache
 C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\obj\Debug\netcoreapp3.1\TextBasedGame.csprojAssemblyReference.cache
 C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\bin\Debug\netcoreapp3.1\MagicOrMuscle.exe
@@ -11,3 +10,4 @@ C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\bin\Debug\netcoreapp
 C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\bin\Debug\netcoreapp3.1\MagicOrMuscle.pdb
 C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\obj\Debug\netcoreapp3.1\MagicOrMuscle.dll
 C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\obj\Debug\netcoreapp3.1\MagicOrMuscle.pdb
+C:\Users\HolyK\Desktop\GitRepos\TextBasedGame\TextBasedGame\obj\Debug\netcoreapp3.1\TextBasedGame.csproj.CoreCompileInputs.cache

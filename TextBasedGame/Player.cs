@@ -167,11 +167,11 @@ namespace TextBasedGame
         public void UpdateStats()
         {
             
-            MaxHP = 100 + (AtkUses / 10) + (KillOr / 3) + (TravelsRun * 10);
+            MaxHP = 100 + (AtkUses / 3) + (KillOr) + (TravelsRun * 10);
             if (MaxHP > 500) { MaxHP = 500; }
-            MaxMP = 100 + (MagUses / 10);
+            MaxMP = 100 + (MagUses / 3);
             if (MaxMP > 150) { MaxMP = 150; }
-            MaxStamina = 100 + (AtkUses / 10);
+            MaxStamina = 100 + (AtkUses / 3);
             if (MaxStamina > 150) { MaxStamina = 150; }
         }
     }
